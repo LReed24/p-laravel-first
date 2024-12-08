@@ -18,6 +18,19 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $role = Role::create($request->all());
-        return response()->json($role, 201);//
+        if (!$role) {
+            return redirect()->back()->with('error', 'No se pudo crear el rol');
+        }
+        // return response()->json($role, 201);//
+        return redirect()
+            ->route('roles.index')
+            ->with('success', 'Rol creado correctamente');
     }
+
+    //funcion que lleva a la vista de creacion de roles
+    public function create()
+    {
+        return view('roles/create');
+    }
+
 }
